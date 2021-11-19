@@ -12,12 +12,17 @@ const ActionHistoryValidator = require('./validator/actionhistory');
 
 const sysHistory = require('./api/sysHistory');
 const SysHistoryService = require('./services/postgres/sysHistoryService');
-const sysHistoryValidator = require('./validator/syshistory')
+const sysHistoryValidator = require('./validator/syshistory');
+
+const dataHistory = require('./api/dataHistory');
+const DataHistoryService = require('./services/postgres/dataHistoryService');
+const dataHistoryValidator = require('./validator/datahistory');
 
 const init = async () => {
     const sysInfoService = new SysInfoService();
     const actionHistoryService = new ActionHistoryService();
     const sysHistoryService = new SysHistoryService();
+    const dataHistoryService = new DataHistoryService();
 
     const server = Hapi.server({
         port: process.env.PORT,
@@ -50,7 +55,14 @@ const init = async () => {
                 service: sysHistoryService,
                 validator: sysHistoryValidator,
             }
-        }
+        },
+        {
+            plugin: dataHistory,
+            options: {
+                service: dataHistoryService,
+                validator: dataHistoryValidator,
+            }
+        },
     ]);
 
     await server.start();
