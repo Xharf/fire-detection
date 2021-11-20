@@ -11,6 +11,7 @@ class DataHistoryHandler {
     this.deleteDataHistoryByIdHandler = this.deleteDataHistoryByIdHandler.bind(this);
   }
 
+  
   async postDataHistoryHandler(request, h) {
     try {
       this._validator.validateDataHistoryPayload(request.payload);
