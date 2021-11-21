@@ -6,7 +6,10 @@ const NotFoundError = require('../../exceptions/NotFoundError');
 
 class SysInfoService{
     constructor(){
-        this._pool = new Pool({connectionString: process.env.PGURI});
+        this._pool = new Pool({connectionString: process.env.PGURI,   
+            ssl: {
+            rejectUnauthorized: false,
+          },});
     }
 
     async getSysInfo(){
