@@ -21,6 +21,11 @@ class SysHistoryService {
     return result.rows[0];
   }
 
+  async getLastSysHistory(sys_device) {
+    const result = await this._pool.query("SELECT * FROM sys_history WHERE sys_device = $1 ORDER BY created_at DESC LIMIT 1", [sys_device]);
+    return result.rows[0];
+  }
+
   async addSysHistory({
     sys_device,
     wifi_status,

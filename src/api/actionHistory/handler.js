@@ -9,7 +9,7 @@ class ActionHistoryHandler {
     this.getActionHistoryByIdHandler = this.getActionHistoryByIdHandler.bind(this);
     this.postActionHistoryHandler = this.postActionHistoryHandler.bind(this);
     this.deleteActionHistoryByIdHandler = this.deleteActionHistoryByIdHandler.bind(this);
-
+    this.getLastActionHistoryHandler = this.getLastActionHistoryHandler.bind(this);
   }
 
   async getActionHistoryHandler(request, h) {
@@ -49,6 +49,38 @@ class ActionHistoryHandler {
       return {
         status: 'Success',
         data: actionHistory,
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+
+        response.code(error.statusCode);
+        return response;
+      }
+
+      // error dari server
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami',
+      });
+
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getLastActionHistoryHandler(request, h) {
+    try {
+      const lastActionHistory = await this._service.getLastActionHistory();
+      return {
+        status: 'Success',
+        data: {
+          lastActionHistory,
+        },
       };
     } catch (error) {
       if (error instanceof ClientError) {

@@ -9,6 +9,7 @@ class SysHistoryHandler {
     this.getSysHistoryHandler = this.getSysHistoryHandler.bind(this);
     this.getSysHistoryByIdHandler = this.getSysHistoryByIdHandler.bind(this);
     this.deleteSysHistoryByIdHandler = this.deleteSysHistoryByIdHandler.bind(this);
+    this.getLastSysHistoryHandler = this.getLastSysHistoryHandler.bind(this);
   }
 
   
@@ -20,6 +21,41 @@ class SysHistoryHandler {
         status: 'success',
         data: {
           sysHistory,
+        },
+      }
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+
+        response.code(error.statusCode);
+        return response;
+      }
+
+      // error dari server
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami',
+      });
+
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getLastSysHistoryHandler(request, h) {
+    try {
+
+      const { sys_device } = request.params;
+      const lastSysHistory = await this._service.getLastSysHistory(sys_device);
+      
+      return {
+        status: 'success',
+        data: {
+          lastSysHistory,
         },
       }
     } catch (error) {

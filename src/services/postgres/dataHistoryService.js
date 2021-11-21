@@ -21,6 +21,11 @@ class DataHistory {
     return result.rows[0];
   }
 
+  async getLastDataHistory(sys_device) {
+    const result = await this._pool.query('SELECT * FROM data_history WHERE sys_device = $1 ORDER BY created_at DESC LIMIT 1', [sys_device]);
+    return result.rows[0];
+  }
+  
   async addDataHistory({
     sys_device, humidity, temperature, gas_density, is_there_fire, ask_for_help
   }) {

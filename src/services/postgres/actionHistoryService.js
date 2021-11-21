@@ -39,6 +39,11 @@ class ActionHistoryService {
       return result.rows[0];
   }
 
+  async getLastActionHistory() {
+    const result = await this._pool.query('SELECT * FROM action_history ORDER BY created_at DESC LIMIT 1');
+    return result.rows[0];
+  }
+
   async deleteActionHistoryById(id) {
     const query = {
       text: 'DELETE FROM action_history WHERE id = $1 RETURNING id',

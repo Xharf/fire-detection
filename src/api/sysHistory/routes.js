@@ -15,6 +15,11 @@ const routes = (handler) => [
     handler: handler.getSysHistoryByIdHandler,
   },
   {
+    method: 'GET',
+    path: '/lastsyshistory/{sys_device}',
+    handler: handler.getLastSysHistoryHandler,
+  },
+  {
     method: 'DELETE',
     path: '/syshistory/{id}',
     handler: handler.deleteSysHistoryByIdHandler,

@@ -24,7 +24,7 @@ exports.up = pgm => {
       type: 'VARCHAR(30)',
       notNull: true,
     },
-    flash_status: {
+    flame_status: {
       type: 'VARCHAR(30)',
       notNull: true,
     },

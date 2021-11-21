@@ -9,6 +9,7 @@ class DataHistoryHandler {
     this.getDataHistoryHandler = this.getDataHistoryHandler.bind(this);
     this.getDataHistoryByIdHandler = this.getDataHistoryByIdHandler.bind(this);
     this.deleteDataHistoryByIdHandler = this.deleteDataHistoryByIdHandler.bind(this);
+    this.getLastDataHistoryHandler = this.getLastDataHistoryHandler.bind(this);
   }
 
   
@@ -64,6 +65,40 @@ class DataHistoryHandler {
         status: 'success',
         data: {
           dataHistory,
+        },
+      }
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+  
+        response.code(error.statusCode);
+        return response;
+      }
+  
+      // error dari server
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami',
+      });
+  
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getLastDataHistoryHandler(request, h) {
+    try {
+      const { sys_device } = request.params;
+      const lastDataHistory = await this._service.getLastDataHistory(sys_device);
+
+      return {
+        status: 'success',
+        data: {
+          lastDataHistory,
         },
       }
     } catch (error) {

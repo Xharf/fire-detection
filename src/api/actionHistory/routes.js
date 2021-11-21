@@ -10,6 +10,11 @@ const routes = (handler) => [
       handler: handler.getActionHistoryByIdHandler,
   },
   {
+      method: 'GET',
+      path: '/lastactionhistory',
+      handler: handler.getLastActionHistoryHandler,
+  },
+  {
       method: 'POST',
       path: '/actionhistory',
       handler: handler.postActionHistoryHandler,

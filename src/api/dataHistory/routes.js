@@ -10,6 +10,11 @@ const routes = (handler) => [
     handler: handler.getDataHistoryByIdHandler,
   },
   {
+    method: 'GET',
+    path: '/lastdatahistory/{sys_device}',
+    handler: handler.getLastDataHistoryHandler,
+  },
+  {
     method: 'POST',
     path: '/datahistory',
     handler: handler.postDataHistoryHandler,
