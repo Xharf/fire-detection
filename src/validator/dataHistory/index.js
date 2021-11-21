@@ -11,4 +11,5 @@ const DataHistoryValidator = {
   },
 };
 
+
 module.exports = DataHistoryValidator;
