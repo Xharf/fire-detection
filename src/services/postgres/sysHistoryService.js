@@ -5,7 +5,10 @@ const NotFoundError = require("../../exceptions/NotFoundError");
 
 class SysHistoryService {
   constructor() {
-    this._pool = new Pool();
+    this._pool = new Pool({connectionString: process.env.PGURI,   
+      ssl: {
+      rejectUnauthorized: false,
+    },});
   }
 
   async getSysHistory() {

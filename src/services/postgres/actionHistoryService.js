@@ -5,7 +5,10 @@ const NotFoundError = require('../../exceptions/NotFoundError');
 
 class ActionHistoryService {
   constructor(cacheService) {
-    this._pool = new Pool();
+    this._pool = new Pool({connectionString: process.env.PGURI,   
+      ssl: {
+      rejectUnauthorized: false,
+    },});
     this._cacheService = cacheService;
   }
 
