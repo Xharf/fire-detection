@@ -25,7 +25,7 @@ class DataHistory {
   }
 
   async getDataHistoryBySysDeviceId(id) {
-    const result = await this._pool.query('SELECT * FROM data_history WHERE sys_device = $1 DESC BY created_at LIMIT 100', [id]);
+    const result = await this._pool.query('SELECT * FROM data_history WHERE sys_device = $1 ORDER BY created_at DESC LIMIT 100' , [id]);
     if (!result.rows) {
       throw new NotFoundError("Data History tidak ditemukan");
     }
@@ -47,7 +47,7 @@ class DataHistory {
       text: 'INSERT INTO data_history VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
       values: [id, sys_device, humidity, temperature, gas_density, is_there_fire, ask_for_help, created_at],
     };
-    
+
     const result = await this._pool.query(query);
 
     if (!result.rows[0]) {
