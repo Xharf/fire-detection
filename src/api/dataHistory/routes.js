@@ -16,7 +16,7 @@ const routes = (handler) => [
   },
   {
     method: 'GET',
-    path: '/datahistory/sid/{sys_device}',
+    path: '/datahistory/sid/{id}',
     handler: handler.getDataHistoryByDeviceIdHandler,
   },
   {
