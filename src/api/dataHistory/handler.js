@@ -11,7 +11,6 @@ class DataHistoryHandler {
     this.deleteDataHistoryByIdHandler = this.deleteDataHistoryByIdHandler.bind(this);
     this.getLastDataHistoryHandler = this.getLastDataHistoryHandler.bind(this);
   }
-
   
   async postDataHistoryHandler(request, h) {
     try {

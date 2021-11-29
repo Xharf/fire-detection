@@ -18,10 +18,10 @@ class DataHistory {
 
   async getDataHistoryById(id) {
     const result = await this._pool.query('SELECT * FROM data_history WHERE id = $1', [id]);
-    if (!result.rows[0]) {
+    if (!result.rows) {
       throw new NotFoundError("Data History tidak ditemukan");
     }
-    return result.rows[0];
+    return result.rows;
   }
 
   async getLastDataHistory(sys_device) {
