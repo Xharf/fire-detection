@@ -10,6 +10,7 @@ class DataHistoryHandler {
     this.getDataHistoryByIdHandler = this.getDataHistoryByIdHandler.bind(this);
     this.deleteDataHistoryByIdHandler = this.deleteDataHistoryByIdHandler.bind(this);
     this.getLastDataHistoryHandler = this.getLastDataHistoryHandler.bind(this);
+    this.getDataHistoryByDeviceIdHandler = this.getDataHistoryByDeviceIdHandler.bind(this);
   }
   
   async postDataHistoryHandler(request, h) {
@@ -128,6 +129,41 @@ class DataHistoryHandler {
       const { id } = request.params;
 
       const dataHistory = await this._service.getDataHistoryById(id);
+
+      return {
+        status: 'success',
+        data: {
+          dataHistory,
+        },
+      }
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+  
+        response.code(error.statusCode);
+        return response;
+      }
+  
+      // error dari server
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami',
+      });
+  
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getDataHistoryByDeviceIdHandler(request, h) {
+    try {
+      const { id } = request.params;
+
+      const dataHistory = await this._service.getDataHistoryBySysDeviceId(id);
 
       return {
         status: 'success',
